@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>game JanKenPon</title>
+    <style>
+
+    body{
+        background-image: url(hip-square.png);
+    }
+
+    .kotak-luar {
+        width: 1000px;
+        height: 620px;
+        background-color: white; 
+        margin: 0 auto;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-radius: 50px;
+        position: relative;
+    }
+        
+
+    .kotak-com {
+        background-image: url(jankenpo.jpg);
+        /* background: linear-gradient(blue,rgb(135, 135, 221)); */
+        width: 750px;
+        height: 250px;
+        /* background-color: blue; */
+        /* background: linear-gradient(blue,rgb(92, 92, 228); */
+        margin: 10px auto;
+        margin-top: 5px;
+        border-radius: 20px;
+        position: relative;
+    }
+
+    .hasil {
+        /* position: absolute; */
+        text-align: center;
+        border: 5px solid red;
+        width: 150px;
+        height: 40px;
+        background-color: white;
+        margin: 0 auto;
+        border-radius: 10px;
+        z-index: 1;
+        margin-left: 42%;
+
+    }
+
+    /* #hasil {
+        width: 150px;
+        height: 50px;
+        margin: 0 auto
+    } */
+    h3 {
+        font-family: Arial;
+    }
+
+    .kotak-player {
+        /* background-color: green; */
+        background-image: url(../css/jankenpo.jpg);
+        background-position-y: 500px;
+        /* background: linear-gradient(green,rgb(77, 233, 103)); */
+        width: 750px;
+        height: 250px;
+        margin:  10px auto;
+        padding-top: 20px;
+        border-radius: 20px;
+        position: relative;
+    }
+
+    #computer {
+        margin-top: 15px;
+    }
+
+    #gajah, #semut, #orang {
+        transition: .3s;
+        position: relative;
+        
+
+    }
+
+    #gajah:hover, #semut:hover, #orang:hover {
+        box-shadow: 0 0 10px 5px lightblue;
+    }
+
+
+
+    </style>
+
+</head>
+<div class="kotak-luar">
+    <div class="container">
+        <div class="kotak-com">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 offset-4 ">
+                        <img id="computer" class="img-fluid img-thumbnail rounded-circle computer" src="orang.png" >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<div class="hasil">
+    <span > <h3 id="hasil">Game Suit</h3></span>
+
+</div>
+    <div class="kotak-player">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img  id="gajah" class="img-fluid img-thumbnail rounded-circle pemain"  src="gajah.png" >
+                </div>
+                <div class="col-sm-4">
+                        <img  id="orang" class="img-fluid img-thumbnail rounded-circle pemain"  src="orang.png" >
+                </div>
+                <div class="col-sm-4">
+                        <img  id="semut" class="img-fluid img-thumbnail rounded-circle pemain"  src="semut.png"  
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $('.pemain').click(function(){
+        let pilihan = $(this).attr('id');
+        console.log(pilihan);
+
+        let bot = Math.random();
+        let pilihan_bot = '';
+
+        if (bot >= 0 && bot <=0.3){
+            pilihan_bot = 'gajah';
+        }else if (bot >=0.3 && bot <=0.7){
+            pilihan_bot = 'orang';
+        }else{
+            pilihan_bot = 'semut';
+        }
+
+        console.log (pilihan_bot);
+
+        let Hasil = '';
+        if (pilihan == 'gajah'){
+            if (pilihan_bot == 'gajah'){
+                hasil = "SERI";
+            }else if(pilihan_bot == 'semut'){
+                hasil = "KALAH";
+            }else if(pilihan_bot == 'orang'){
+                hasil = "MENANG";
+            }
+        }else if (pilihan == 'semut'){
+            if (pilihan_bot == 'semut'){
+                hasil="SERI";
+            }else if (pilihan_bot == 'gajah'){
+                hasil = "MENANG";
+            }else if (pilihan_bot == 'orang'){
+                hasil = "KALAH";
+            }
+        }else if (pilihan == 'orang'){
+            if (pilihan_bot == 'orang'){
+                hasil = "SERI";
+            }else if (pilihan_bot == 'semut'){
+                hasil = "MENANG";
+            }else if (pilihan_bot == 'gajah'){
+                hasil = "KALAH";
+            }
+        }else{
+            hasil = "coba lagi mas";
+        }
+        console.log(hasil);
+
+        // $( "#hasil").text(hasil);
+
+        // $("#computer").attr('src', pilihan_bot+'.png');
+        
+        //PROSES PUTAR2
+
+        let random = ['gajah','orang','semut'];
+        let index = 0;
+        let hitung=0;
+        //setinterval untuk looping disetiap x milisekon
+
+
+        let putar = setInterval(function(){
+            if (index==3){//jika index gambar = 3 , kembalikan ke awal lagi dengan index 0
+                index=0;
+            }
+
+            $('#computer').attr(
+                'src', 'img/' +random[index] + '.png');
+                index++;
+                hitung++;
+                //jika sudah berputar 100kali hentikan
+
+                if(hitung==10){
+                    clearInterval(putar);
+                    
+                    //untuk keluargame jankenri looping interval
+                    $('#hasil').text(hasil);
+
+                    $('#computer').attr('src', 'img/'+pilihan_bot + '.png');
+                }
+        },100);//looping setiap 100 mili sekon
+        //end proses putar
+
+    })
+    
+
+</script>
+<body>
+    
+</body>
+</html>
